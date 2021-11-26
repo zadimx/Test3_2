@@ -17,9 +17,11 @@ class DetailCollectionView: UIViewController {
   @IBOutlet weak var newsDetailsDesriptionTextView: UITextView!
   @IBOutlet weak var newsDetailsImageView: UIImageView!
   
+  @IBOutlet weak var viewContent: UIView!
   override func viewDidLoad() {
     super.viewDidLoad()
     presenter.setData()
+    initialImageView(imageView: newsDetailsImageView, view: viewContent)
     
     // Do any additional setup after loading the view.
   }
@@ -34,12 +36,23 @@ extension DetailCollectionView: DetailCollectionViewProtocol{
     else{
         newsDetailsImageView.image = UIImage(data: data1!)
     }
-    
-    newsDetailsDateLabel.text = data?.publishedAt
-    newsDetailsHistoryLabel.text = data?.url
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = "MMM d,yyyy"
+
+    let date = dateFormatterGet.date(from: data?.publishedAt ?? "2016-02-29 12:24:26") ?? Date(timeIntervalSince1970: 1)
+    newsDetailsDateLabel.text = dateFormatterPrint.string(from: date as Date)
+    newsDetailsHistoryLabel.text = data?.source?.name
     newsDetailsTopicTextView.text = data?.title
     newsDetailsDesriptionTextView.text = data?.content
   }
-  
-  
+
+}
+extension DetailCollectionView{
+  func initialImageView(imageView: UIImageView, view: UIView){
+      imageView.layer.cornerRadius = 20
+    view.layer.cornerRadius = 20
+    }
 }

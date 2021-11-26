@@ -8,9 +8,8 @@
 import UIKit
 
 class TableViewController: UIViewController{
-  
   var indexOfPageToRequest = 1
-  let networkService = NetworkService()
+//  let networkService = NetworkService()
   
     var mainPresenter: TableViewPresenterProtocol!
 
@@ -25,6 +24,7 @@ class TableViewController: UIViewController{
 //      mainPresenter.getArticles()
       tableView.dataSource = self
       tableView.delegate = self
+//    mainPresenter.getArticles()
       view.addSubview(tableView)
     tableView.reloadData()
     }
@@ -32,7 +32,9 @@ class TableViewController: UIViewController{
 }
 extension TableViewController: UITableViewDataSource{
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return mainPresenter.articles?.count ?? 0
+    let x = mainPresenter.articles?.count
+    print("####numberOfRowsInSection \(x)")
+    return x ?? 0
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -69,17 +71,18 @@ extension TableViewController: UITableViewDataSource{
           print("%%%%% \(offsetY) \(scrollView.frame.size.height) \(contentHeight)")
             // call your API for more data
 //            loadSaved(indexOfPageToRequest)
-          mainPresenter.getArticles()
+//          mainPresenter.getArticles()
             // tell the table view to reload with the new data
 //            self.tableView.reloadData()
-          tableView.reloadData()
+//          tableView.reloadData()
         }
   }
+
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    if indexPath.row == ((mainPresenter.articles?.count ?? 0)){
-//      print("$$$$$willDisplay \(indexPath.row) \(mainPresenter.articles?.count)")
-      
-      
+    
+    if (indexPath.row == ((mainPresenter.articles?.count ?? 0)-1)){
+      print("$$$$$willDisplay \(indexPath.row) \(mainPresenter.articles?.count)")
+      mainPresenter.getArticles()
   //      let object = objectOtherTableViewCellModel[indexPath.row]
   }
   

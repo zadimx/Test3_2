@@ -13,23 +13,34 @@ class MyCollectionViewCell: UICollectionViewCell {
   @IBOutlet var myLabelHistory: UILabel!
   @IBOutlet var myTextView: UITextView!
   @IBOutlet var myImageView: UIImageView!
+  
+  @IBOutlet weak var viewContent: UIView!
   static let identifier = "MyCollectionViewCell"
   static func nib() -> UINib {
     return UINib(nibName: "MyCollectionViewCell", bundle: nil)
   }
     override func awakeFromNib() {
         super.awakeFromNib()
+      viewContent.layer.cornerRadius = 20
         initialImageView(imageView: myImageView)
         // Initialization code
     }
 
   public func configuration(with mainObject: Articles){
-    myLabel.text = mainObject.publishedAt
-    myLabelHistory.text = mainObject.url
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = "MMM d,yyyy"
+
+    let date = dateFormatterGet.date(from: mainObject.publishedAt ?? "2016-02-29 12:24:26") ?? Date(timeIntervalSince1970: 1)
+    myLabel.text = dateFormatterPrint.string(from: date as Date)
+    myLabelHistory.text = mainObject.source?.name
     myTextView.text = mainObject.title
 //    print("#####configuration \(mainObject.urlToImage)")
-    let url = URL(string: mainObject.urlToImage ?? "https://images.ua.prom.st/1954375335_w640_h640_dokshelter-alyuteh-dsf.jpg")
-    let data = try? Data(contentsOf: url!)
+    let tmpUrl = URL(fileURLWithPath: "https://images.ua.prom.st/1954375335_w640_h640_dokshelter-alyuteh-dsf.jpg")
+    let url = URL(string: mainObject.urlToImage ?? "https://images.ua.prom.st/1954375335_w640_h640_dokshelter-alyuteh-dsf.jpg") ?? tmpUrl
+    let data = try? Data(contentsOf: url)
     if(data == nil){
         myImageView.image = UIImage(named: "11.png")
     }
@@ -44,7 +55,7 @@ class MyCollectionViewCell: UICollectionViewCell {
 //  }
 }
 extension MyCollectionViewCell{
-    func initialImageView(imageView: UIImageView){
+  func initialImageView(imageView: UIImageView){
       imageView.layer.cornerRadius = 20
     }
 }

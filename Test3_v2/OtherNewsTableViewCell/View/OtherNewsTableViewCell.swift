@@ -24,10 +24,22 @@ class OtherNewsTableViewCell: UITableViewCell{
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
     }
+  
   func set(object: Articles){
-    self.dateLabel.text = object.publishedAt
-    let url = URL(string: object.urlToImage ?? "https://images.ua.prom.st/1954375335_w640_h640_dokshelter-alyuteh-dsf.jpg")
-    let data = (try? Data(contentsOf: url!))
+    let dateFormatterGet = DateFormatter()
+    dateFormatterGet.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+    let dateFormatterPrint = DateFormatter()
+    dateFormatterPrint.dateFormat = "MMM d,yyyy"
+    let date = dateFormatterGet.date(from: object.publishedAt ?? "2016-02-29 12:24:26") ?? Date(timeIntervalSince1970: 1)
+    
+    let formatter = RelativeDateTimeFormatter()
+    formatter.unitsStyle = .short
+    let time = Date(timeIntervalSince1970: TimeInterval(Date().timeIntervalSince1970))
+ 
+    self.dateLabel.text = formatter.localizedString(for: date, relativeTo: time)
+    let tmp = URL(fileURLWithPath: "https://images.ua.prom.st/1954375335_w640_h640_dokshelter-alyuteh-dsf.jpg")
+    let url = URL(string: object.urlToImage ?? "https://images.ua.prom.st/1954375335_w640_h640_dokshelter-alyuteh-dsf.jpg") ?? tmp
+    let data = (try? Data(contentsOf: url))
     if(data == nil){
         self.imageNews.image = UIImage(named: "11.png")
     }
@@ -35,7 +47,7 @@ class OtherNewsTableViewCell: UITableViewCell{
         
         self.imageNews.image = UIImage(data: data!)
     }
-    self.urlLabel.text = object.url
+    self.urlLabel.text = object.source?.name
     self.mainNewsTextView.text = object.title
   }
 }

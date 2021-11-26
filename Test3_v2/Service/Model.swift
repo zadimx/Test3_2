@@ -76,10 +76,14 @@ struct Root:Decodable{
     var articles: [Articles]
 }
 struct Articles:Decodable{
+    var source: Source?
     var title: String? // age
     var content: String? // city, cordinate
     var urlToImage: String? // first, last name
     var url: String?
     var publishedAt: String?
+}
+struct Source:Decodable{
+  var name: String?
 }
 

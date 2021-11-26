@@ -27,12 +27,13 @@ class CollectionViewTableViewCell: UITableViewCell, UICollectionViewDataSource{
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-      print("####CollectionViewTableViewCll")
+      print("####CollectionViewTableViewCell")
         collectionView.delegate = self
       collectionView.dataSource = self
         view.addSubview(collectionView)
-        
+      
       collectionView.reloadData()
+      
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MyCollectionViewCell.identifier, for: indexPath) as! MyCollectionViewCell
@@ -48,6 +49,13 @@ class CollectionViewTableViewCell: UITableViewCell, UICollectionViewDataSource{
       return UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
     }
 
+  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    if (indexPath.row == ((presenter.articles?.count ?? 0)-1)){
+//      print("$$$$$willDisplay \(indexPath.row) \(mainPresenter.articles?.count)")
+      presenter.getArticles()
+  //      let object = objectOtherTableViewCellModel[indexPath.row]
+  }
+  }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
       
       let offsetX = scrollView.contentOffset.x
@@ -57,13 +65,13 @@ class CollectionViewTableViewCell: UITableViewCell, UICollectionViewDataSource{
 
               // increments the number of the page to request
               indexOfPageToRequest += 1
-            print("%%%%% \(offsetX) \(scrollView.frame.size.width) \(contentHeight)")
+            print("%%%%%Collection \(offsetX) \(scrollView.frame.size.width) \(contentHeight)")
               // call your API for more data
   //            loadSaved(indexOfPageToRequest)
-            presenter.getArticles()
+//            presenter.getArticles()
               // tell the table view to reload with the new data
   //            self.tableView.reloadData()
-            collectionView.reloadData()
+//            collectionView.reloadData()
           }
     }
 
