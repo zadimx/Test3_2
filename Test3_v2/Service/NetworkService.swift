@@ -13,33 +13,31 @@ protocol NetworkServiceProtocol {
 class NetworkService: NetworkServiceProtocol{
   func getArticles(urlString: String, completion: @escaping (Result<[Articles]?, Error>) -> Void) {
     guard let url = URL(string: urlString) else{
-        return
+      return
     }
     URLSession.shared.dataTask(with: url) { (data, response, error) in
-        DispatchQueue.main.async {
-            if let error = error{
-                print("ERROR")
-                completion(.failure(error))
-                return
-            }
-            guard let data = data else {
-             
-                return
-            }
-            do{
-              
-              let articles = try JSONDecoder().decode(Root?.self, from: data)
-              completion(.success(articles?.articles))
-              
-            }catch let jsonError{
-                print("Failed to decode JSON", jsonError)
-                completion(.failure(jsonError))
-            }
+      DispatchQueue.main.async {
+        if let error = error{
+          print("ERROR")
+          completion(.failure(error))
+          return
         }
-        }.resume()
+        guard let data = data else {
+          
+          return
+        }
+        do{
+          
+          let articles = try JSONDecoder().decode(Root?.self, from: data)
+          completion(.success(articles?.articles))
+          
+        }catch let jsonError{
+          print("Failed to decode JSON", jsonError)
+          completion(.failure(jsonError))
+        }
+      }
+    }.resume()
   }
   
-//    func request(urlString: String, completion: @escaping (Result<Root, Error>) -> Void) {
-//
-//    }
+  
 }

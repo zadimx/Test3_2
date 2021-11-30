@@ -19,19 +19,41 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jR0-CE-qxr">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="jR0-CE-qxr">
+                    <rect key="frame" x="0.0" y="106" width="414" height="790"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="790" id="Ooe-72-V8S"/>
+                        <constraint firstAttribute="width" constant="414" id="heb-KD-NpL"/>
+                    </constraints>
                     <inset key="separatorInset" minX="8" minY="0.0" maxX="8" maxY="0.0"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="9xO-kR-1vk"/>
                         <outlet property="delegate" destination="-1" id="KCY-h7-tkz"/>
                     </connections>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Browse News" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9nM-wl-CfW">
+                    <rect key="frame" x="-9" y="44" width="423" height="54"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="423" id="U7c-9Z-1Hv"/>
+                        <constraint firstAttribute="height" constant="54" id="wFq-eK-n7n"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="jR0-CE-qxr" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" constant="34" id="2qh-XX-Ejg"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jR0-CE-qxr" secondAttribute="trailing" id="DLT-95-mwN"/>
+                <constraint firstItem="9nM-wl-CfW" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="E3i-R4-gUh"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="9nM-wl-CfW" secondAttribute="trailing" id="Ok8-DH-Ngy"/>
+                <constraint firstItem="jR0-CE-qxr" firstAttribute="top" secondItem="9nM-wl-CfW" secondAttribute="bottom" constant="8" symbolic="YES" id="UJJ-Ea-MBi"/>
+                <constraint firstItem="jR0-CE-qxr" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="lbw-1J-NVK"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="leading" secondItem="9nM-wl-CfW" secondAttribute="leading" constant="9" id="tof-Xp-26Y"/>
+            </constraints>
             <point key="canvasLocation" x="-252.17391304347828" y="0.0"/>
         </view>
     </objects>
